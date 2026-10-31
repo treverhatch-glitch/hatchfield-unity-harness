@@ -28,6 +28,11 @@
 - **Hatchfield's rules in Unity:** not started. Step one (repeatable web rules) is next.
 - **Running the crew from Discord end to end:** the guide and rules are written; no full day has been run yet.
 
+## Option A: Unity runs the web game's own rules (decided 2026-10-31)
+- **Tested in plain .NET:** the packed web rules in Jint play all 3 replays and match every day's numbers
+  (cash, passengers, flights, reputation, dice position): `3/3 replay(s) match through the port`.
+- **UNTESTED:** the same inside the Unity editor, and its speed there (in .NET, about 60 s per 3 game days).
+
 ## Tested on the Unity side (with .NET, no editor)
 - The rules' dice match the web game's bit for bit (seed 1337, first three rolls and the state).
 - The 3 web replay files load; day-3 numbers match the web: seed 1 cash 257,306 / 399 pax / 6 flights, seed 2

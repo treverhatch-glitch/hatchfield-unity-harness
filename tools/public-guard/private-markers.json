@@ -1,0 +1,14 @@
+{
+  "why": "the web game's packed rules (or other code from the private hatchfield-game repo): build it on Hatch's PC, never commit it here",
+  "files": [
+    "(^|/)hatchfield-sim[^/]*\\.(m?js|cjs|txt|bytes|json)$",
+    "(^|/)dist-sim/",
+    "(^|/)Assets/StreamingAssets/Rules/.+",
+    "(^|/)Rules~/.+"
+  ],
+  "text": [
+    "seedScheduleForAirline\\s*\\(",
+    "buildStarterKit\\s*\\(\\s*\\)\\s*\\{",
+    "export class Game\\b"
+  ]
+}
