@@ -12,7 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../Assets/Sim/**/*.cs" />
-    <Compile Include="../RulesHost/RulesHost.cs" />
+    <Compile Include="../../Assets/Rules/**/*.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
