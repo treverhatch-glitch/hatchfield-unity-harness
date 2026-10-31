@@ -32,8 +32,9 @@ jobs:
         if: env.UNITY_LICENSE != ''
         with:
           path: Library
-          key: Library-windows-${{ hashFiles('Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt') }}
-          restore-keys: Library-windows-
+          # A new Library whenever packages, the Unity version, assemblies or plugins change, and no fallback to an
+          # older one: a Library from a build without the Jint plugin crashed the next build (exit 137, P-017).
+          key: Library-win2-${{ hashFiles('Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt', 'ProjectSettings/GraphicsSettings.asset', 'Assets/**/*.asmdef', 'Assets/Plugins/**') }}
       - uses: game-ci/unity-builder@v4
         if: env.UNITY_LICENSE != ''
         with:
