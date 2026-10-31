@@ -4,11 +4,11 @@
 
 | What | Where | Visible to |
 | --- | --- | --- |
-| The studio harness (tasks, checks, lanes, logs) | `C:\Users\HatchTag\3d-deep-sim-studio-harness` (its own private repo) | Hatch and the crew |
-| The web game (TypeScript, three.js) | adopted into the harness at `game\hatchfield\`; its own repo is `hatchfield-game` | public once Hatch OKs it |
-| The Unity port (Unity 6000.6, URP) | `C:\Users\HatchTag\hatchfield-unity-harness` (this repo) | public |
+| The studio harness (tasks, checks, lanes, logs) | the harness folder: a clone of its own private repo | Hatch and the crew |
+| The web game (TypeScript, three.js) | adopted into the harness at `game/hatchfield/`; its own repo is `hatchfield-game` | private |
+| The Unity port (Unity 6000.6, HDRP, a Windows game) | this repo, cloned beside the harness folder | public |
 
-Run harness commands from the harness folder. Unity commands take this repo's path.
+Run harness commands from the harness folder. Unity commands take this repo's path (below, `<unity>`).
 
 ## A task, start to finish
 
@@ -26,10 +26,10 @@ npm run task -- pause T-123 --agent sonnet-1 --note "where I stopped and why"   
 Unity work (the commands point at this repo):
 
 ```bash
-npm run engine:sim -- ../hatchfield-unity-harness       # the game rules: purity check + tests, no Unity needed
+npm run engine:sim -- <unity>                           # the game rules: purity check + tests, no Unity needed
 npm run parity                                          # Unity rules vs web rules, same seeds (once the port is set up)
-node harness/unity.mjs gate ../hatchfield-unity-harness # Unity's own Edit Mode + Play Mode tests (needs Unity)
-npm run engine:build -- ../hatchfield-unity-harness     # a playable browser build (--target windows for an .exe)
+node harness/unity.mjs gate <unity>                     # Unity's own Edit Mode + Play Mode tests (needs Unity)
+npm run engine:build -- <unity> --target windows        # the playable Windows game (Build/Windows/Game.exe)
 npm run engine -- drift                                 # web changes the Unity port hasn't taken yet
 ```
 

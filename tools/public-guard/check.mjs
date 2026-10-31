@@ -45,8 +45,10 @@ const KEYS = [
 ];
 // Words that mark a file as private.
 const PRIVATE = [
-  [/Proprietary:\s*do not share|DO NOT SHARE PUBLICLY|INTERNAL ONLY|PRIVATE[ -]NOTES?\b/i, 'marked private or proprietary'],
-  [/3D Deep Simulation (?:&|and) AI Game Studio Harness|STUDIO_LOCK_OWNER|harness\/(?:task|lane|adopt|done-check)\.mjs/, 'text from the private studio harness'],
+  [/Proprietary:\s*do not share|do not share publicly/i, 'marked private or proprietary'],
+  [/\b(?:INTERNAL ONLY|PRIVATE NOTES?|CONFIDENTIAL)\b/, 'marked private or proprietary'],
+  // The harness's own code (its file headers and title), not a guide that names its commands.
+  [/3D Deep Simulation (?:&|and) AI Game Studio Harness|^ \* harness\/[\w-]+\.mjs —/m, 'text from the private studio harness'],
 ];
 
 const problems = [];

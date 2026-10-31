@@ -20,15 +20,14 @@
 ## Not tested yet
 - **The Unity editor side:** the game driver, the Play Mode controls test, the build script. They run once
   Unity is reachable from CI (licence secrets) or on Hatch's PC.
+- **The HDRP switch** (from URP, decided 2026-10-31): set-up script written, runs in the Unity editor.
 - **The online Unity build job** (needs the secrets).
 - **Hatchfield's rules in Unity:** not started. Step one (repeatable web rules) is next.
 - **Running the crew from Discord end to end:** the guide and rules are written; no full day has been run yet.
 
 ## Waiting on Hatch (steps in OWNER-STEPS.md)
-1. Harness visibility: it is **public** today. Decide private (and how to keep its checks free), plus what to
-   do with the two old public copies.
+1. Make the harness private, set up the runner on your PC, and make the two old copies private (decided).
 2. Unity licence secrets in GitHub.
 3. The owner key (keygen), kept where the bots can't read it.
 4. Branch protection: free on public repos; a private repo needs a paid GitHub plan.
-5. OK to make `hatchfield-game` public, after the history check.
-6. URP (plays in the browser too) or HDRP (best lighting, PC only).
+5. `hatchfield-game` stays private for now; the history check report comes first.

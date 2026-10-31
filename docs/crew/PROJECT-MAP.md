@@ -1,9 +1,9 @@
 # The two projects, and how they stay in step
 
 ```
- hatchfield-game (web, TypeScript + three.js)          hatchfield-unity-harness (Unity 6000.6, URP)
+ hatchfield-game (web, TypeScript + three.js)          hatchfield-unity-harness (Unity 6000.6, HDRP)
  ─────────────────────────────────────────────          ──────────────────────────────────────────────
- the game people can play today                         the port: becomes the main version
+ the game people can play today, in a browser           the port: the main version, a Windows game
  src/game/sim.ts …  the rules                           Assets/Sim/   the rules, pure C# (no Unity code)
  browser build: hatchfield-latest.pages.dev             Assets/Game/  input, drawing, UI (Unity)
            │                                                       ▲
@@ -34,8 +34,10 @@
 | --- | --- |
 | Web | the browser build, or `npm run dev` in the web game folder |
 | Unity, in the editor | open this folder in Unity Hub, press Play |
-| Unity, on Windows | `npm run engine:build -- ../hatchfield-unity-harness --target windows` → `Build/Windows/Game.exe` |
-| Unity, in a browser | `npm run engine:build -- ../hatchfield-unity-harness` → `Build/WebGL` (the harness's Arcade plays it) |
+| Unity, on Windows | `npm run engine:build -- <unity> --target windows` → `Build/Windows/Game.exe` |
+
+The Unity version uses HDRP at maximum quality, so it is a Windows game only; browser links stay on the web
+version.
 
 ## First step of the port (in progress)
 
