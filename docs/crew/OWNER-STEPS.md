@@ -15,19 +15,29 @@ One step at a time. Never paste a key, token, password or licence file into a ch
    `ANTI-GRAV` → **Settings** → **Danger Zone** → **Change repository visibility** → **Make private**. Don't
    delete them.
 
-## 2. Unity licence secrets (for the online Unity tests and builds)
+## 2. Unity licence secrets (for the online Unity build)
 
-Do this in **hatchfield-unity-harness**, and in the harness repo if you want its Unity job to run.
+**First, make sure the licence file exists on your PC:**
+1. Open **Unity Hub** and sign in. A Google sign-in is fine: you added a password, and the online build needs
+   that email and password.
+2. Hub → the gear (**Preferences**) → **Licenses**. You should see an active **Personal** licence. If not:
+   **Add** → **Get a free personal license**.
+3. In File Explorer, open `C:\ProgramData\Unity\`. You should see `Unity_lic.ulf`. (`ProgramData` is hidden: type
+   the path into the address bar.)
 
-1. On GitHub, open the repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**.
-2. Name: `UNITY_LICENSE`. Value: on your PC, open `C:\ProgramData\Unity\Unity_lic.ulf` in Notepad, press
-   Ctrl+A, Ctrl+C, and paste it into the Value box. Click **Add secret**.
-3. New secret `UNITY_EMAIL`: the email you sign in to Unity with.
-4. New secret `UNITY_PASSWORD`: your Unity password.
-5. Tell Claude "secrets added" (no values). If your Unity account uses two-step sign-in, say that too: it may
-   need another route. *(Untested until the first run.)*
+**Then add three secrets** to **hatchfield-unity-harness** on GitHub:
+4. Repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**.
+5. Name `UNITY_LICENSE`. Value: open `Unity_lic.ulf` in Notepad, press Ctrl+A, Ctrl+C, and paste it into the Value
+   box. **Add secret**.
+6. Name `UNITY_EMAIL`: the email of your Unity account. **Add secret**.
+7. Name `UNITY_PASSWORD`: the Unity password you added. **Add secret**.
+8. Tell Claude "secrets added" (no values). The next push runs the Windows build: the first one with HDRP takes
+   30–60 minutes.
 
-Secrets in a public repo are safe: GitHub never shows them, and other people's pull requests can't read them.
+**About your account:** the online build signs in with email and password, so your password-added Google
+account works. If your Unity account has **two-step verification** turned on, that sign-in can fail; then we use
+another route. *(Untested until the first run.)* Secrets are safe in a public repo: GitHub never shows them, and
+pull requests from other people can't read them.
 
 ## 3. The owner key (only you can approve changes to protected files)
 
@@ -48,3 +58,15 @@ Secrets in a public repo are safe: GitHub never shows them, and other people's p
 
 It stays private for now. Before any change, Claude scans its whole history and lists every file, commit and
 note that would become visible, and any key or private link. Nothing changes without your OK.
+
+## 6. Switch the Unity project to HDRP (once, at the PC)
+
+1. Get the latest of this repo (in GitHub Desktop: **Fetch**, then **Pull**; or `git pull` in a terminal).
+2. Open the project in Unity Hub. Unity installs the HDRP package (a few minutes).
+3. Menu **Hatchfield → Switch to HDRP (max quality)**. Wait for "[hdrp] FINISHED" in the Console.
+4. **Window → Rendering → HDRP Wizard**: every row green; press **Fix All** if not.
+5. Press **Play**, take a screenshot, and commit and push the new files (`Assets/Settings/HDRP/`, the changed
+   `ProjectSettings/` files and the `.meta` files).
+Any "[hdrp] SKIPPED" line in the Console means that setting has another name in this HDRP version: send Claude
+the Console text (no screenshots of keys).
+

@@ -119,3 +119,9 @@ Unity_lic.ulf
 *.alf
 .env
 .env.*
+
+# .NET build output of the editor-free tools
+/tools/**/bin/
+/tools/**/obj/
+/tools/**/TestResults/
+!/tools/**/*.csproj

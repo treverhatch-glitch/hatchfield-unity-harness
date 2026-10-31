@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | The studio harness (tasks, checks, lanes, logs) | the harness folder: a clone of its own private repo | Hatch and the crew |
 | The web game (TypeScript, three.js) | adopted into the harness at `game/hatchfield/`; its own repo is `hatchfield-game` | private |
-| The Unity port (Unity 6000.6, HDRP, a Windows game) | this repo, cloned beside the harness folder | public |
+| The Unity port (Unity 6000.6, HDRP at max quality, a Windows game) | this repo, cloned beside the harness folder | public |
 
 Run harness commands from the harness folder. Unity commands take this repo's path (below, `<unity>`).
 
@@ -27,6 +27,7 @@ Unity work (the commands point at this repo):
 
 ```bash
 npm run engine:sim -- <unity>                           # the game rules: purity check + tests, no Unity needed
+dotnet run --project tools/SimCli -- replay replays      # (in this repo) the Unity rules against the web game's replay files
 npm run parity                                          # Unity rules vs web rules, same seeds (once the port is set up)
 node harness/unity.mjs gate <unity>                     # Unity's own Edit Mode + Play Mode tests (needs Unity)
 npm run engine:build -- <unity> --target windows        # the playable Windows game (Build/Windows/Game.exe)

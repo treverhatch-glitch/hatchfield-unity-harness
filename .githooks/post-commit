@@ -1,0 +1,4 @@
+#!/bin/sh
+# Git LFS (Unity art): kept here because core.hooksPath points at .githooks.
+command -v git-lfs >/dev/null 2>&1 || exit 0
+git lfs post-commit "$@"

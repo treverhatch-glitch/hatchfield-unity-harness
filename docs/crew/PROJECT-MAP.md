@@ -37,9 +37,17 @@
 | Unity, on Windows | `npm run engine:build -- <unity> --target windows` → `Build/Windows/Game.exe` |
 
 The Unity version uses HDRP at maximum quality, so it is a Windows game only; browser links stay on the web
-version.
+version. HDRP's first build compiles thousands of shaders: 30–60 minutes on GitHub's machines (free for this
+public repo); later builds reuse the cache.
 
-## First step of the port (in progress)
+## The replay check (the port's yardstick)
+
+The web game records replay files (`replays/city-start-1..3.json`): a scripted game from a seed, with a
+checkpoint every game day. `dotnet run --project tools/SimCli -- replay replays` prints, per file, what the web
+game reached and what the Unity rules say. Today: `0/3 replay(s) match` and "not ported yet" for each, because no
+rules are ported. A part of the rules counts as ported when the replays match through it.
+
+## First step of the port (done on the web side)
 
 The web rules use `Math.random` in about 116 places, so the same game can't be replayed, and there's nothing
 exact to compare the Unity rules with. Step one makes the web rules repeatable: one seeded random number
