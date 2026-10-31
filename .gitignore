@@ -125,3 +125,9 @@ Unity_lic.ulf
 /tools/**/obj/
 /tools/**/TestResults/
 !/tools/**/*.csproj
+
+# The web game's packed rules: built on Hatch's PC from the private game repo, never committed here
+/Rules~/
+/dist-sim/
+/Assets/StreamingAssets/Rules/
+/Assets/StreamingAssets/Rules.meta

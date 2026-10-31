@@ -17,3 +17,13 @@
    files that are never committed.
 10. **Log as you go:** the work log after every task, the problems log for every problem and workaround
     (LOGS.md).
+11. **UNTESTED until someone has run it**, and it stays marked UNTESTED in every note, PR and log until there is a
+    screenshot or a log line that shows it working:
+    - the web rules running inside Unity (Jint in Unity; so far proven in plain .NET only)
+    - the HDRP set-up (menu Hatchfield > Switch to HDRP)
+    - Play Mode in the Unity editor
+    - the Windows build (locally or in CI)
+    Nobody writes "works", "done" or "fixed" for these without that proof linked next to it.
+12. **The web game's packed rules file never goes in this repo** (it is the private game's code). It is built on
+    Hatch's PC into `Rules~/` (ignored by Git and by Unity). The guard blocks it by name and by content.
+

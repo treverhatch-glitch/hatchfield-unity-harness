@@ -34,6 +34,20 @@ npm run engine:build -- <unity> --target windows        # the playable Windows g
 npm run engine -- drift                                 # web changes the Unity port hasn't taken yet
 ```
 
+## The game's rules in Unity (option A, decided 2026-10-31)
+
+Unity runs the web game's own rules file; Unity only draws (HDRP), takes input and shows UI. The rules file is
+the private game's code, so it is **built on Hatch's PC and never committed here**:
+
+1. In the web game folder (the private repo), on the branch that has `tools/replay/vite.sim.config.ts`:
+   `npx vite build --config tools/replay/vite.sim.config.ts` → `dist-sim/hatchfield-sim.mjs`.
+2. Copy that file to this repo's `Rules~/hatchfield-sim.mjs` (Git and Unity both ignore `Rules~/`).
+3. Check it: `dotnet run --project tools/SimCli -- replay replays` → `3/3 replay(s) match through the port`
+   (about a minute per replay).
+
+The guard blocks the rules file here by name and by content. Running the rules inside the Unity editor is
+UNTESTED (proven in plain .NET only).
+
 ## Proving work
 
 "Done" is never just "done". Every finished task gets one of these in the work log:
