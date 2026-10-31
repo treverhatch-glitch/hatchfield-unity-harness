@@ -20,7 +20,8 @@
 11. **UNTESTED until someone has run it**, and it stays marked UNTESTED in every note, PR and log until there is a
     screenshot or a log line that shows it working:
     - the web rules inside a Windows build (.exe); the build itself has no rules file in it yet
-    - the replay check inside the Unity editor (the Edit Mode tests have not been run in the editor yet)
+    - the replay check through the rules inside the Unity editor (the 4 basic Edit Mode tests passed in Hatch's editor
+      on 2026-10-31; `RulesReplayTests`, added in PR #11, has not been run in the editor yet)
     Proven, with the proof in docs/crew/STATUS.md: the HDRP set-up on Hatch's PC; Play Mode with HDRP; the web
     rules running in Play Mode through Jint (day 1 matches .NET exactly); the CI Windows build with HDRP.
     Nobody writes "works", "done" or "fixed" for these without that proof linked next to it.
@@ -30,9 +31,14 @@
 13. **React, then report, on Discord.** The moment a crew bot gets a task message, it reacts 👀. When the task is
     done, it reacts ✅ on the same message, then posts a short result (what changed, the PR or log link, the proof,
     and anything UNTESTED) that @mentions the grokbot game development bot (`<@1565786850763743272>`).
-14. **When the grokbot game development bot prompts you, answer it by name.** Whenever the grokbot game development
-    bot (Discord id `1565786850763743272`) prompts a crew bot, that bot's reply @mentions it
-    (`<@1565786850763743272>`), so it always knows what got done.
+14. **When the grokbot game development bot's prompt reaches you, answer it by name.** Its prompts reach a crew bot
+    only through a person (rule 17). When one does, the crew bot's reply @mentions it (`<@1565786850763743272>`), so
+    it always knows what got done.
 15. **Every fix goes through the harness**, whatever its size: a harness task (claim it), a review, a screenshot or
     log line as proof, and entries in the work log and the problems log. No fix lands outside that loop.
 16. **Untested things are marked untested**, in the Discord result, the PR and the logs (rules 7 and 11).
+17. **Only a person's @ping wakes a crew bot.** The crew bots (Opus, Sonnet, Haiku) wake only when a person
+    @mentions them. A message from another bot, even one that @mentions them, does not wake them. So nobody waits
+    on a bot-to-bot hand-off. A bot that needs another bot asks Hatch (or the person on duty) to @ping it, or puts
+    the work in the harness's task queue. Every crew bot still reacts 👀 the moment it sees a task and ✅ when it
+    has finished it (rule 13).
