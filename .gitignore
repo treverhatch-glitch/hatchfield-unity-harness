@@ -112,3 +112,10 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Never commit licences or keys (tools/public-guard blocks them too)
+Unity_lic.ulf
+*.ulf
+*.alf
+.env
+.env.*

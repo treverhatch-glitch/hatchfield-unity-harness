@@ -1,0 +1,4 @@
+#!/bin/sh
+# This repo is public: block secrets, licence files and private harness files before they leave this computer.
+# Turn it on once per clone: git config core.hooksPath .githooks
+node tools/public-guard/check.mjs || exit 1
