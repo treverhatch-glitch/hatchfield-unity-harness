@@ -39,6 +39,10 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           buildName: Hatchfield
+          # No version from Git tags, and a checkout that differs only in Git LFS bookkeeping still builds (the URP
+          # starter icon is stored outside LFS, which marks the tree "dirty" right after checkout).
+          versioning: None
+          allowDirtyBuild: true
       - uses: actions/upload-artifact@v4
         if: env.UNITY_LICENSE != ''
         with:
