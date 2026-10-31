@@ -49,7 +49,7 @@ public sealed class HatchfieldRulesDriver : MonoBehaviour
             latest = host.View();
         }
         catch (System.Exception e) { note = $"Rules failed to load: {e.Message}"; Debug.LogException(e); return; }
-        Debug.Log($"[rules] loaded {file}: city-start seed {Seed}");
+        Debug.Log($"[rules] loaded {file} (sha256 {host.Fingerprint}): city-start seed {Seed}");
         running = true;
         worker = new Thread(Loop) { IsBackground = true, Name = "Hatchfield rules" };
         worker.Start();

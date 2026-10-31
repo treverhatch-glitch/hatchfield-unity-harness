@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <!-- The Hatchfield rules (Assets/Sim) and their Edit Mode tests, built with plain .NET: no Unity editor and no
-       licence. Run: dotnet test tools/SimTests. LangVersion 9 is Unity 6's C#. -->
+  <!-- The Hatchfield rules (Assets/Sim, and Assets/Rules: the web game's rules in Jint) and their Edit Mode tests,
+       built with plain .NET: no Unity editor and no licence. Run: dotnet test tools/SimTests. The rules replays take
+       about a minute per seed; to skip them, filter out the category: TestCategory!=Slow. LangVersion 9 is Unity 6's
+       C#. Jint is the same version as Assets/Plugins/Jint and tools/SimCli. -->
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <LangVersion>9.0</LangVersion>
@@ -10,9 +12,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../Assets/Sim/**/*.cs" />
+    <Compile Include="../../Assets/Rules/**/*.cs" />
     <Compile Include="../../Assets/Tests/EditMode/**/*.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Jint" Version="4.17.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
     <PackageReference Include="NUnit" Version="3.14.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />

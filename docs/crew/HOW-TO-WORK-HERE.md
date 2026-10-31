@@ -45,6 +45,14 @@ the private game's code, so it is **built on Hatch's PC and never committed here
 3. Check it: `dotnet run --project tools/SimCli -- replay replays` → `3/3 replay(s) match through the port`
    (about a minute per replay).
 
+The same check is an Edit Mode test (`Assets/Tests/EditMode/RulesReplayTests.cs`, category `Slow`): in the Unity
+editor, Window > General > Test Runner > EditMode > Run All; `dotnet test tools/SimTests` runs it without the editor
+(`--filter TestCategory!=Slow` leaves it out). It plays the 3 replays through the rules file, one to three minutes
+per seed, and the editor waits while it runs. Without `Rules~/hatchfield-sim.mjs` (CI, a fresh clone) it is
+Ignored with the reason, not failed. Its output names the rules file's fingerprint (the first 12 hex digits of its
+sha256, as `sha256sum` prints them; the rules host logs it too when it loads), so a stale copy shows. Running it
+inside the Unity editor is UNTESTED.
+
 The guard blocks the rules file here by name and by content. Running the rules inside the Unity editor is
 UNTESTED (proven in plain .NET only).
 
