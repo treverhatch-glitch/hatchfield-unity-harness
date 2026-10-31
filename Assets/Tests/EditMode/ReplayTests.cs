@@ -23,7 +23,8 @@ namespace Hatchfield.Sim.Tests
         [Test]
         public void ReadsTheWebGamesReplayFiles()
         {
-            var expect = new[] { (1, 25730600L, 399, 6), (2, 25964400L, 365, 5), (3, 25988400L, 367, 6) };
+            // Day 3 of the replays recorded on hatchfield-game main (2026-10-31).
+            var expect = new[] { (1, 29018500L, 298, 6), (2, 30053500L, 260, 5), (3, 30143800L, 269, 6) };
             foreach (var (seed, cash, pax, flights) in expect)
             {
                 var f = Load(seed);
