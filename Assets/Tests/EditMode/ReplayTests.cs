@@ -23,7 +23,8 @@ namespace Hatchfield.Sim.Tests
         [Test]
         public void ReadsTheWebGamesReplayFiles()
         {
-            // Day 3 of the replays recorded on hatchfield-game main (2026-10-31).
+            // Day 3 of the replays recorded on hatchfield-game main (2026-10-31), re-recorded on the deterministic-math
+            // rules (PU-22, game commit be0ffe2d): every checkpoint came out the same.
             var expect = new[] { (1, 29018500L, 298, 6), (2, 30053500L, 260, 5), (3, 30143800L, 269, 6) };
             foreach (var (seed, cash, pax, flights) in expect)
             {

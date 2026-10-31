@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using Hatchfield.Sim.Replay;
 using Jint;
 using Jint.Native;
+using Jint.Native.Object;
 
 namespace Hatchfield.Rules
 {
@@ -28,6 +29,7 @@ globalThis.structuredClone = globalThis.structuredClone || ((v) => v === undefin
 ";
 
         readonly Engine engine;
+        readonly ObjectInstance exportsNs;
         readonly JsValue play;
         readonly JsValue newGame;
         readonly JsValue tick;
@@ -50,12 +52,19 @@ globalThis.structuredClone = globalThis.structuredClone || ((v) => v === undefin
             engine.Execute(Globals);
             engine.Modules.Add("rules", File.ReadAllText(rulesFile));
             var ns = engine.Modules.Import("rules");
+            exportsNs = ns;
             play = ns.Get("play");
             newGame = ns.Get("newGame");
             tick = ns.Get("tick");
             view = ns.Get("view");
             if (play.IsUndefined()) throw new InvalidOperationException("the rules file has no play() export (pack tools/replay/host.ts)");
         }
+
+        /// <summary>Any export of the rules file by name (undefined if there is none), e.g. detSin for DetMathCheck.</summary>
+        public JsValue Export(string name) => exportsNs.Get(name);
+
+        /// <summary>True when the rules file exports this name (for callers without a Jint reference, like the tests).</summary>
+        public bool HasExport(string name) => !Export(name).IsUndefined();
 
         /// <summary>True when the rules file has the live-play API (tools/replay/host.ts), not only replays.</summary>
         public bool CanPlayLive => !newGame.IsUndefined() && !tick.IsUndefined() && !view.IsUndefined();
