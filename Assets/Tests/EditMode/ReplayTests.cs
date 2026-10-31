@@ -9,7 +9,7 @@ namespace Hatchfield.Sim.Tests
 {
     public class ReplayTests
     {
-        static string ReplayDir()
+        internal static string ReplayDir()
         {
             // The repo root's replays/ folder, found from the test's own folder upward.
             var d = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);
@@ -18,7 +18,7 @@ namespace Hatchfield.Sim.Tests
             return Path.Combine(d.FullName, "replays");
         }
 
-        static ReplayFile Load(int seed) => ReplayFile.FromJson(File.ReadAllText(Path.Combine(ReplayDir(), $"city-start-{seed}.json")));
+        internal static ReplayFile Load(int seed) => ReplayFile.FromJson(File.ReadAllText(Path.Combine(ReplayDir(), $"city-start-{seed}.json")));
 
         [Test]
         public void ReadsTheWebGamesReplayFiles()

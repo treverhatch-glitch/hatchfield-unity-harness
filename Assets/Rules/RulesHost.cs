@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using Hatchfield.Sim.Replay;
 using Jint;
 using Jint.Native;
@@ -34,9 +35,17 @@ globalThis.structuredClone = globalThis.structuredClone || ((v) => v === undefin
         JsValue game = JsValue.Undefined;
         string scenario = "city-start";
 
+        /// <summary>The loaded rules file's fingerprint: the first 12 hex digits of its sha256 (as sha256sum prints
+        /// it), so a stale copy in Rules~/ is visible next to any result.</summary>
+        public string Fingerprint { get; }
+
         public RulesHost(string rulesFile)
         {
             if (!File.Exists(rulesFile)) throw new FileNotFoundException($"the packed rules file isn't there: {rulesFile} (build it on Hatch's PC: docs/crew/HOW-TO-WORK-HERE.md)");
+            Fingerprint = FingerprintOf(rulesFile);
+            // Plain .NET has no UnityEngine here (Hatchfield.Rules has noEngineReferences): in Unity this line goes to
+            // the Editor log, and HatchfieldRulesDriver repeats the fingerprint in the Console.
+            Console.WriteLine($"[rules] {rulesFile}: sha256 {Fingerprint}");
             engine = new Engine(o => o.LimitRecursion(4000).Strict(false));
             engine.Execute(Globals);
             engine.Modules.Add("rules", File.ReadAllText(rulesFile));
@@ -67,6 +76,14 @@ globalThis.structuredClone = globalThis.structuredClone || ((v) => v === undefin
         {
             var text = engine.Evaluate("JSON.stringify").Call(view.Call(game)).AsString();
             return (Dictionary<string, object>)MiniJson.Parse(text);
+        }
+
+        /// <summary>The fingerprint of any file, without loading it: first 12 hex digits of its sha256.</summary>
+        public static string FingerprintOf(string file)
+        {
+            using (var sha = SHA256.Create())
+            using (var s = File.OpenRead(file))
+                return BitConverter.ToString(sha.ComputeHash(s)).Replace("-", "").ToLowerInvariant().Substring(0, 12);
         }
 
         /// <summary>The rules file next to this repo's Rules~/ folder, or HATCHFIELD_RULES, or null.</summary>

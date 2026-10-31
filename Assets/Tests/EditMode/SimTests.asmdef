@@ -1,7 +1,7 @@
 {
   "name": "Hatchfield.Sim.Tests",
   "rootNamespace": "Hatchfield.Sim.Tests",
-  "references": ["Hatchfield.Sim"],
+  "references": ["Hatchfield.Sim", "Hatchfield.Rules"],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
