@@ -27,3 +27,12 @@
 12. **The web game's packed rules file never goes in this repo** (it is the private game's code). It is built on
     Hatch's PC into `Rules~/` (ignored by Git and by Unity). The guard blocks it by name and by content.
 
+13. **React, then report, on Discord.** The moment a crew bot gets a task message, it reacts 👀. When the task is
+    done, it reacts ✅ on the same message, then posts a short result (what changed, the PR or log link, the proof,
+    and anything UNTESTED) that @mentions the grokbot game development bot (`<@1565786850763743272>`).
+14. **When the grokbot game development bot prompts you, answer it by name.** Whenever the grokbot game development
+    bot (Discord id `1565786850763743272`) prompts a crew bot, that bot's reply @mentions it
+    (`<@1565786850763743272>`), so it always knows what got done.
+15. **Every fix goes through the harness**, whatever its size: a harness task (claim it), a review, a screenshot or
+    log line as proof, and entries in the work log and the problems log. No fix lands outside that loop.
+16. **Untested things are marked untested**, in the Discord result, the PR and the logs (rules 7 and 11).
