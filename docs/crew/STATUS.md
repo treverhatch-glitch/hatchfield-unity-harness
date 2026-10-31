@@ -26,10 +26,12 @@
 - **Play Mode with HDRP:** the sample scene plays with the HDRP sky, and the Console shows 0 errors and 0
   warnings. Only the empty sample scene: no game, rules or art in it yet.
 
+- **CI Windows build with HDRP:** "Build Finished, Result: Success", a 64 MB `hatchfield-windows` download, 23 min
+  (PR #6's unity run).
+
 ## Not tested yet
 - **The Unity editor side:** the game driver, the Play Mode controls test, the build script. They run once
   Unity is reachable from CI (licence secrets) or on Hatch's PC.
-- **The Windows build in CI with HDRP** (30–60 min the first time): the first HDRP build runs on this PR.
 - **Max settings vs the PC's graphics card:** set for an RTX; check once the exact model is known.
 - **Hatchfield's rules in Unity:** not started. Step one (repeatable web rules) is next.
 - **Running the crew from Discord end to end:** the guide and rules are written; no full day has been run yet.
@@ -39,8 +41,11 @@
   (cash, passengers, flights, reputation, dice position): `3/3 replay(s) match through the port`.
 - **Live play in .NET:** the same API Unity uses (new game, tick, what to draw): 60 ticks of city-start seed 1 reach
   the replay's day 1 exactly (cash 270,679, 118 passengers, 32x32 grid with 118 built tiles), ~0.4 s per tick.
-- **UNTESTED:** all of it inside the Unity editor (Jint in Unity, `Assets/Game/HatchfieldRulesDriver.cs`: rules on a
-  worker thread, tiles as blocks at 22 m per cell, flights as markers, a status line), and its speed there.
+- **Proven in the Unity editor (2026-10-31, Hatch's PC, Play Mode, HDRP):** `HatchfieldRulesDriver` loaded
+  `Rules~/hatchfield-sim.mjs` ("[rules] loaded ... city-start seed 1"), drew the airport's tiles and flight NO101,
+  and at tick 60 showed **day 1, cash 270,679, 118 passengers**, the same as .NET. Console: 0 errors, 0 warnings.
+  One tick every 3 s at speed 1x, as designed.
+- **UNTESTED:** faster speeds, longer runs (day 3), and the rules inside a Windows build.
 
 ## Tested on the Unity side (with .NET, no editor)
 - The rules' dice match the web game's bit for bit (seed 1337, first three rolls and the state).
