@@ -17,14 +17,20 @@
 - **This repo's public guard** blocks keys, licence files, harness files and private notes (tried with planted
   ones: 6 of 6 blocked).
 
+## Proven on 2026-10-31
+- **Unity licence in CI:** GameCI activated the Personal licence ("Successfully activated ULF license").
+- **CI Windows build (URP sample, before the HDRP switch):** "Build Finished, Result: Success", a 41 MB
+  `hatchfield-windows` download, about 8 minutes (PR #4's unity run).
+- **The HDRP switch on Hatch's PC (Unity 6000.6.7f1, DX12):** the menu ran to "[hdrp] FINISHED", and every row
+  in the HDRP Wizard (17.6.0) is green, Global and Current Quality.
+- **Play Mode with HDRP:** the sample scene plays with the HDRP sky, and the Console shows 0 errors and 0
+  warnings. Only the empty sample scene: no game, rules or art in it yet.
+
 ## Not tested yet
 - **The Unity editor side:** the game driver, the Play Mode controls test, the build script. They run once
   Unity is reachable from CI (licence secrets) or on Hatch's PC.
-- **The HDRP switch** (decided 2026-10-31, HDRP at max quality): the package is added and the set-up script is
-  written (menu Hatchfield > Switch to HDRP). It runs in the Unity editor; nobody has run it yet.
-- **The Windows build in CI** (HDRP, 30–60 min first time): waits for the licence secrets.
+- **The Windows build in CI with HDRP** (30–60 min the first time): the first HDRP build runs on this PR.
 - **Max settings vs the PC's graphics card:** set for an RTX; check once the exact model is known.
-- **The online Unity build job** (needs the secrets).
 - **Hatchfield's rules in Unity:** not started. Step one (repeatable web rules) is next.
 - **Running the crew from Discord end to end:** the guide and rules are written; no full day has been run yet.
 
