@@ -43,14 +43,15 @@
   the replay's day 1 exactly (cash 270,679, 118 passengers, 32x32 grid with 118 built tiles), ~0.4 s per tick.
 - **Proven in the Unity editor (2026-10-31, Hatch's PC, Play Mode, HDRP):** `HatchfieldRulesDriver` loaded
   `Rules~/hatchfield-sim.mjs` ("[rules] loaded ... city-start seed 1"), drew the airport's tiles and flight NO101,
-  and at tick 60 showed **day 1, cash 270,679, 118 passengers**, the same as .NET. Console: 0 errors, 0 warnings.
+  and at tick 60 showed **day 1, cash 270,679, 118 passengers**, the same as .NET (rules from the Oct 14 trunk; main's rules give other numbers). Console: 0 errors, 0 warnings.
   One tick every 3 s at speed 1x, as designed.
 - **UNTESTED:** faster speeds, longer runs (day 3), and the rules inside a Windows build.
 
 ## Tested on the Unity side (with .NET, no editor)
 - The rules' dice match the web game's bit for bit (seed 1337, first three rolls and the state).
-- The 3 web replay files load; day-3 numbers match the web: seed 1 cash 257,306 / 399 pax / 6 flights, seed 2
-  259,644 / 365 / 5, seed 3 259,884 / 367 / 6.
+- The 3 web replay files (re-recorded on hatchfield-game main, 2026-10-31) load; day-3 numbers: seed 1 cash
+  290,185 / 298 pax / 6 flights, seed 2 300,535 / 260 / 5, seed 3 301,438 / 269 / 6. The rules packed from main
+  play all 3 in .NET/Jint: 3/3 match.
 - The replay check says "not ported yet" (0/3) instead of passing, and a planted difference is named
   ("day 2: passengers …").
 
