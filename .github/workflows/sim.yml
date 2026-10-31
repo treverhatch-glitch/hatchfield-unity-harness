@@ -1,0 +1,18 @@
+name: sim
+# The Hatchfield rules (Assets/Sim) with plain .NET: no Unity editor, no licence, a minute or two.
+# Their tests (Assets/Tests/EditMode), then the replay check against the web game's replay files.
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  sim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: dotnet test tools/SimTests
+      - run: dotnet run --project tools/SimCli -- replay replays

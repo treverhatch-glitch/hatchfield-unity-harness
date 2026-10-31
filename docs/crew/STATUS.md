@@ -20,10 +20,20 @@
 ## Not tested yet
 - **The Unity editor side:** the game driver, the Play Mode controls test, the build script. They run once
   Unity is reachable from CI (licence secrets) or on Hatch's PC.
-- **The HDRP switch** (from URP, decided 2026-10-31): set-up script written, runs in the Unity editor.
+- **The HDRP switch** (decided 2026-10-31, HDRP at max quality): the package is added and the set-up script is
+  written (menu Hatchfield > Switch to HDRP). It runs in the Unity editor; nobody has run it yet.
+- **The Windows build in CI** (HDRP, 30–60 min first time): waits for the licence secrets.
+- **Max settings vs the PC's graphics card:** set for an RTX; check once the exact model is known.
 - **The online Unity build job** (needs the secrets).
 - **Hatchfield's rules in Unity:** not started. Step one (repeatable web rules) is next.
 - **Running the crew from Discord end to end:** the guide and rules are written; no full day has been run yet.
+
+## Tested on the Unity side (with .NET, no editor)
+- The rules' dice match the web game's bit for bit (seed 1337, first three rolls and the state).
+- The 3 web replay files load; day-3 numbers match the web: seed 1 cash 257,306 / 399 pax / 6 flights, seed 2
+  259,644 / 365 / 5, seed 3 259,884 / 367 / 6.
+- The replay check says "not ported yet" (0/3) instead of passing, and a planted difference is named
+  ("day 2: passengers …").
 
 ## Waiting on Hatch (steps in OWNER-STEPS.md)
 1. Make the harness private, set up the runner on your PC, and make the two old copies private (decided).

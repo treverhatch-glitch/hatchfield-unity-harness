@@ -1,0 +1,47 @@
+name: unity
+# The Windows game build (HDRP, max quality) on GitHub's machines, which are free for a public repo.
+# Runs once the UNITY_LICENSE, UNITY_EMAIL and UNITY_PASSWORD secrets exist (docs/crew/OWNER-STEPS.md); until
+# then it prints a notice and passes. Never use a self-hosted runner on this repo: it is public, so anyone's pull
+# request could run code on that machine.
+# HDRP's first build compiles thousands of shader variants: expect 30-60 minutes. The Library cache makes the
+# next builds much faster.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    steps:
+      - name: No Unity licence yet
+        if: env.UNITY_LICENSE == ''
+        run: echo "::notice::No UNITY_LICENSE secret yet, so no Unity build (docs/crew/OWNER-STEPS.md)"
+      - uses: actions/checkout@v4
+        if: env.UNITY_LICENSE != ''
+        with:
+          lfs: true
+      - uses: actions/cache@v4
+        if: env.UNITY_LICENSE != ''
+        with:
+          path: Library
+          key: Library-windows-${{ hashFiles('Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt') }}
+          restore-keys: Library-windows-
+      - uses: game-ci/unity-builder@v4
+        if: env.UNITY_LICENSE != ''
+        with:
+          targetPlatform: StandaloneWindows64
+          buildName: Hatchfield
+      - uses: actions/upload-artifact@v4
+        if: env.UNITY_LICENSE != ''
+        with:
+          name: hatchfield-windows
+          path: build/StandaloneWindows64
+          if-no-files-found: warn
