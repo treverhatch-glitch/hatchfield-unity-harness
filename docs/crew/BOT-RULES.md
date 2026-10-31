@@ -19,10 +19,10 @@
     (LOGS.md).
 11. **UNTESTED until someone has run it**, and it stays marked UNTESTED in every note, PR and log until there is a
     screenshot or a log line that shows it working:
-    - the web rules running inside Unity (Jint in Unity; so far proven in plain .NET only)
-    - the Windows build with HDRP (locally or in CI)
-    Proven, with the proof in docs/crew/STATUS.md: the HDRP set-up on Hatch's PC, Play Mode in the editor with
-    HDRP (empty sample scene only), and a CI Windows build of the URP sample before the switch.
+    - the web rules inside a Windows build (.exe); the build itself has no rules file in it yet
+    - the replay check inside the Unity editor (the Edit Mode tests have not been run in the editor yet)
+    Proven, with the proof in docs/crew/STATUS.md: the HDRP set-up on Hatch's PC; Play Mode with HDRP; the web
+    rules running in Play Mode through Jint (day 1 matches .NET exactly); the CI Windows build with HDRP.
     Nobody writes "works", "done" or "fixed" for these without that proof linked next to it.
 12. **The web game's packed rules file never goes in this repo** (it is the private game's code). It is built on
     Hatch's PC into `Rules~/` (ignored by Git and by Unity). The guard blocks it by name and by content.
