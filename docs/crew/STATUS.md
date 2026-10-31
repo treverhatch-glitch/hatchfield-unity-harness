@@ -31,7 +31,10 @@
 ## Option A: Unity runs the web game's own rules (decided 2026-10-31)
 - **Tested in plain .NET:** the packed web rules in Jint play all 3 replays and match every day's numbers
   (cash, passengers, flights, reputation, dice position): `3/3 replay(s) match through the port`.
-- **UNTESTED:** the same inside the Unity editor, and its speed there (in .NET, about 60 s per 3 game days).
+- **Live play in .NET:** the same API Unity uses (new game, tick, what to draw): 60 ticks of city-start seed 1 reach
+  the replay's day 1 exactly (cash 270,679, 118 passengers, 32x32 grid with 118 built tiles), ~0.4 s per tick.
+- **UNTESTED:** all of it inside the Unity editor (Jint in Unity, `Assets/Game/HatchfieldRulesDriver.cs`: rules on a
+  worker thread, tiles as blocks at 22 m per cell, flights as markers, a status line), and its speed there.
 
 ## Tested on the Unity side (with .NET, no editor)
 - The rules' dice match the web game's bit for bit (seed 1337, first three rolls and the state).

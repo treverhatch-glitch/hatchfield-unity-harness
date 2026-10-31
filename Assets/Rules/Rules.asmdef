@@ -1,0 +1,14 @@
+{
+  "name": "Hatchfield.Rules",
+  "rootNamespace": "Hatchfield.Rules",
+  "references": ["Hatchfield.Sim"],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": ["Jint.dll", "Acornima.dll"],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": true
+}

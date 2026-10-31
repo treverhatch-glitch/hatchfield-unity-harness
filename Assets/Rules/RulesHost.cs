@@ -2,6 +2,7 @@
 // UI. This host loads the packed rules (one JavaScript file built from the private game repo on Hatch's PC, never
 // committed here) into Jint, an embedded JavaScript engine for .NET, and plays a replay scenario through it.
 // Proven in plain .NET: the 3 city-start replays match exactly at day 3. UNTESTED inside Unity.
+// Live play (newGame/tick/view) is the API in the web game's tools/replay/host.ts, packed into the same file.
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,11 @@ globalThis.structuredClone = globalThis.structuredClone || ((v) => v === undefin
 
         readonly Engine engine;
         readonly JsValue play;
+        readonly JsValue newGame;
+        readonly JsValue tick;
+        readonly JsValue view;
+        JsValue game = JsValue.Undefined;
+        string scenario = "city-start";
 
         public RulesHost(string rulesFile)
         {
@@ -36,7 +42,31 @@ globalThis.structuredClone = globalThis.structuredClone || ((v) => v === undefin
             engine.Modules.Add("rules", File.ReadAllText(rulesFile));
             var ns = engine.Modules.Import("rules");
             play = ns.Get("play");
-            if (play.IsUndefined()) throw new InvalidOperationException("the rules file has no play() export (pack tools/replay/replay.ts)");
+            newGame = ns.Get("newGame");
+            tick = ns.Get("tick");
+            view = ns.Get("view");
+            if (play.IsUndefined()) throw new InvalidOperationException("the rules file has no play() export (pack tools/replay/host.ts)");
+        }
+
+        /// <summary>True when the rules file has the live-play API (tools/replay/host.ts), not only replays.</summary>
+        public bool CanPlayLive => !newGame.IsUndefined() && !tick.IsUndefined() && !view.IsUndefined();
+
+        /// <summary>Start a live game from a scenario's opening (Hatchfield's city-start: plot, starter kit, staff).</summary>
+        public void NewGame(string scenarioName, uint seed)
+        {
+            if (!CanPlayLive) throw new InvalidOperationException("this rules file can only play replays: re-pack it from tools/replay/host.ts");
+            scenario = scenarioName;
+            game = newGame.Call(JsValue.FromObject(engine, scenarioName), (double)seed);
+        }
+
+        /// <summary>Advance the rules by dtSec game seconds (the web game steps 3 s at a time in replays).</summary>
+        public void Tick(double dtSec) => tick.Call(game, dtSec, JsValue.FromObject(engine, scenario));
+
+        /// <summary>What to draw now, as plain data: day, clock, cash, passengers, flights, the tile grid.</summary>
+        public Dictionary<string, object> View()
+        {
+            var text = engine.Evaluate("JSON.stringify").Call(view.Call(game)).AsString();
+            return (Dictionary<string, object>)MiniJson.Parse(text);
         }
 
         /// <summary>The rules file next to this repo's Rules~/ folder, or HATCHFIELD_RULES, or null.</summary>

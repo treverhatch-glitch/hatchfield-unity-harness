@@ -10,6 +10,23 @@ public static class Program
 {
     public static int Main(string[] args)
     {
+        if (args.Length > 0 && args[0] == "live")
+        {
+            // dotnet run --project tools/SimCli -- live [ticks] : the live API Unity uses (newGame, tick, view).
+            var file = RulesHost.FindRulesFile(Directory.GetCurrentDirectory());
+            if (file == null) { Console.Error.WriteLine("no packed rules file (Rules~/hatchfield-sim.mjs)"); return 1; }
+            var host = new RulesHost(file);
+            if (!host.CanPlayLive) { Console.Error.WriteLine("this rules file has no live API: re-pack it from tools/replay/host.ts"); return 1; }
+            int ticks = args.Length > 1 ? int.Parse(args[1]) : 60;
+            host.NewGame("city-start", 1);
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            for (int i = 0; i < ticks; i++) host.Tick(3);
+            var v = host.View();
+            var flights = (System.Collections.Generic.List<object>)v["flights"];
+            var tiles = (System.Collections.Generic.List<object>)v["tiles"];
+            Console.WriteLine($"live city-start seed 1 after {ticks} ticks of 3 s: day {v["day"]}, cash {(double)v["cash"]:F0}, pax {v["paxServed"]}, {v["cols"]}x{v["rows"]} grid with {tiles.Count} built tiles, {flights.Count} flight(s) in the air or on the ground ({sw.Elapsed.TotalMilliseconds / ticks:F0} ms per tick)");
+            return 0;
+        }
         if (args.Length == 0 || args[0] != "replay")
         {
             Console.Error.WriteLine("usage: SimCli replay [folder]");
