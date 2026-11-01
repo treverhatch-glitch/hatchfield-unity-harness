@@ -56,6 +56,19 @@ inside the Unity editor is UNTESTED.
 The guard blocks the rules file here by name and by content. Running the rules inside the Unity editor is
 UNTESTED (proven in plain .NET only).
 
+**Deterministic math (PU-22).** The rules never use `Math.sin`, `cos`, `atan2`, `hypot`, `pow`, `exp`, `log`... or
+`**`: their last bits differ between V8, Jint/.NET and each C library (about 10% of outputs on .NET 8/Linux, and
+Windows differs again). They use the web game's `src/game/detMath.ts`, built from exactly specified operations. To
+prove a rules file computes the same bits here as in Node:
+
+1. In the web game, after packing: `node tools/replay/detmath-fixture.ts --unity <this repo>` → about 100,000
+   inputs and Node's outputs in `Rules~/detmath-fixture.txt` (ignored like the rules file).
+2. Here: `dotnet run --project tools/SimCli -- detmath-check` → `96889/96889 outputs bit-identical to Node`,
+   `detmath: MATCH`. `tools/SimCli/detmath-expected.json` (a sha256 per function and a sample, copied from the web
+   game's `tests/sim/detmath-expected.json`) proves the fixture is the expected one; the sample alone runs without
+   the fixture. The same check is the Edit Mode test `DetMathTests` (category `Slow`). Proven on .NET 8/Linux;
+   Windows .NET and the Unity editor are UNTESTED.
+
 ## Proving work
 
 "Done" is never just "done". Every finished task gets one of these in the work log:
